@@ -17,9 +17,11 @@ export default function Home() {
                 </Link>
               </Button>
         </div>
-
-        <Image src='/assets/images/fally.jpg' alt="Hero" width={1000} height={1000}
+        <div className="rounded-lg bg-black">
+          <Image src='/assets/images/fally.jpg' alt="Hero" width={1000} height={1000}
          className="max-h-[70vh] object-contain object-center 2xl:max-h-[50vh]" />
+        </div>
+        
       </div>
     </section>
 
