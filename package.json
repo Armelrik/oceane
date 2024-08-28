@@ -25,6 +25,7 @@
     "mongoose": "^8.5.3",
     "next": "14.2.5",
     "node": "^22.6.0",
+    "oceane": "file:",
     "query-string": "^9.1.0",
     "react": "^18",
     "react-datepicker": "^7.3.0",
