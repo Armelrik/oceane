@@ -17,6 +17,7 @@ import DatePicker from 'react-datepicker';
 import { useUploadThing } from "@/lib/uploadthing"
 import { useRouter } from "next/navigation"
 import { createEvent } from "@/lib/actions/event.actions"
+import { Checkbox } from "../ui/checkbox"
 
 type EventFormProps = {
     userId: string
@@ -26,7 +27,6 @@ type EventFormProps = {
 const EventForm = ({userId, type}: EventFormProps) => {
     const [files, setFiles] = useState<File[]>([])
     const initialValues = eventDefaultValues;
-    const [startDate, setStartDate] = useState(new Date());
     const router = useRouter();
 
     const { startUpload } = useUploadThing('imageUploader');
@@ -46,6 +46,8 @@ const EventForm = ({userId, type}: EventFormProps) => {
       const uploadedImages = await startUpload(files)
 
       if(!uploadedImages) {return}
+      console.log(uploadedImageUrl);
+      console.log(uploadedImages[0].url)
       uploadedImageUrl = uploadedImages[0].url
 
     }
@@ -53,7 +55,7 @@ const EventForm = ({userId, type}: EventFormProps) => {
     if(type === 'Create') {
       try {
         const newEvent = await createEvent({
-          event: { ... values, imageUrl: uploadedImageUrl },
+          event: { ...values, imageUrl: uploadedImageUrl },
           userId,
           path: '/profile'
 
@@ -173,9 +175,8 @@ const EventForm = ({userId, type}: EventFormProps) => {
                       <FormControl>
                         <div className="flex items-center">
                           <label htmlFor="isFree" className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed
-                            peer-disabled:opacity-70">Free Ticket
-                          </label>
-                          {/* <Checkbox onCheckedChange={field.onChange} checked={field.value} id="isFree" className="mr-2 h-5 w-5 border-2 border-primary-500" /> */}
+                            peer-disabled:opacity-70">Free Ticket</label>
+                          <Checkbox onCheckedChange={field.onChange} checked={field.value} id="isFree" className="mr-2 h-5 w-5 border-2 border-primary-500" />
                         </div>
                       </FormControl>
                       <FormMessage />

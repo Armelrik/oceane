@@ -6,8 +6,7 @@ import { handleError } from "../utils";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
 
-export const createEvent = async ({ event, userId, path}: 
-  CreateEventParams) => {
+export async function createEvent ({ event, userId, path}: CreateEventParams) {
     try {
       await connectToDb();
       const organizer = await User.findById(userId);
