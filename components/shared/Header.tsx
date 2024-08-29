@@ -12,9 +12,9 @@ const Header = () => {
     <header className='w-full border-b'>
         <div className="wrapper flex items-center justify-between">
             <Link href="/" className="w-36">
-                <Image src="/assets/images/fally2.jpg" 
-                    width={108} height={38}
-                    alt="Fally">
+                <Image src="/assets/images/logo-color.svg" 
+                    width={150} height={90}
+                    alt="Logo">
                 </Image>
             </Link>
             
