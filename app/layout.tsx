@@ -36,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${agdasima.variable}`}>
+      <html lang="en" className={`${poppins.variable}`}>
         <body className={`${agdasima.variable}`}>{children}</body>
       </html>
     </ClerkProvider>
