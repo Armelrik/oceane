@@ -33,7 +33,7 @@ const EventDetails = async ({ params: {id} }: SearchParamProps) => {
               </div>
 
               <p className="p-medium-18 ml-2 mt-2 sm:mt-0">
-                by{' '}
+                Par{' '}
                 <span className="text-primary-500">{event.organizer.firstName} {event.organizer.lastName}</span>
               </p>
             </div>
@@ -63,7 +63,7 @@ const EventDetails = async ({ params: {id} }: SearchParamProps) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="p-bold-20 text-grey-600">What You'll Learn:</p>
+            <p className="p-bold-20 text-grey-600">Decouvrir:</p>
             <p className="p-medium-16 lg:p-regular-18">{event.description}</p>
             <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline">{event.url}</p>
           </div>
@@ -73,7 +73,7 @@ const EventDetails = async ({ params: {id} }: SearchParamProps) => {
 
     {/* EVENTS with the same category */}
     <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
-      <h2 className="h2-bold">Related Events</h2>
+      <h2 className="h2-bold">Evenements similaires</h2>
 
       {/* <Collection 
           data={relatedEvents?.data}
