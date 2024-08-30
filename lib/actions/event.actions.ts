@@ -5,6 +5,14 @@ import { connectToDb } from "../database"
 import { handleError } from "../utils";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
+import Category from "../database/models/category.model";
+
+const populateEvent = async (query: any) => {
+  return query
+  .populate({ path: 'organizer', model: User, select: '_id firstName lastName' })
+  .populate({ path: 'category', model: Category, select: '_id name' })
+}
+
 
 //Create event
 export async function createEvent ({ event, userId, path}: CreateEventParams) {
@@ -17,7 +25,7 @@ export async function createEvent ({ event, userId, path}: CreateEventParams) {
       }
 
       const newEvent = await Event.create({...event,category: event.categoryId, organizer: userId});
-      return JSON.parse(JSON.stringify(newEvent));
+      return JSON.parse(JSON.stringify(newEvent))
     } catch (error) {
       handleError(error);
     }
@@ -28,7 +36,7 @@ export async function getEventById(eventId: string) {
   try {
     await connectToDb()
 
-    // const event = await populateEvent(Event.findById(eventId))
+    const event = await populateEvent(Event.findById(eventId))
 
     if (!event) throw new Error('Event not found')
 

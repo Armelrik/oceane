@@ -1,30 +1,36 @@
 "use client"
 
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
-import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import {Form,FormControl,FormDescription,FormField,FormItem,FormLabel,FormMessage,} from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import eventFormSchema from "@/lib/validator"
+import { eventFormSchema } from "@/lib/validator"
+import * as z from 'zod'
 import { eventDefaultValues } from "@/constants"
 import Dropdown from "./Dropdown"
-import { Textarea } from "../ui/textarea"
-import {FileUploader} from "./FileUploader"
+import { Textarea } from "@/components/ui/textarea"
+import { FileUploader } from "./FileUploader"
+import { useState } from "react"
 import Image from "next/image"
-import DatePicker from 'react-datepicker';
-import { useUploadThing } from "@/lib/uploadthing"
+import DatePicker from "react-datepicker";
+import { useUploadThing } from '@/lib/uploadthing'
+
+import "react-datepicker/dist/react-datepicker.css";
+import { Checkbox } from "../ui/checkbox"
 import { useRouter } from "next/navigation"
 import { createEvent } from "@/lib/actions/event.actions"
-import { Checkbox } from "../ui/checkbox"
+import { IEvent } from "@/lib/database/models/event.model"
 
 type EventFormProps = {
-    userId: string
-    type: "Create" | "Update"
+  userId: string
+  type: "Create" | "Update"
+  event?: IEvent,
+  eventId?: string
 }
 
-const EventForm = ({userId, type}: EventFormProps) => {
+const EventForm = ({userId, type, event, eventId}: EventFormProps) => {
     const [files, setFiles] = useState<File[]>([])
     const initialValues = eventDefaultValues;
     const router = useRouter();
@@ -39,17 +45,14 @@ const EventForm = ({userId, type}: EventFormProps) => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    // const eventData = values;
     let uploadedImageUrl = values.imageUrl;
 
     if(files.length > 0) {
       const uploadedImages = await startUpload(files)
-
-      if(!uploadedImages) {return}
-      console.log(uploadedImageUrl);
-      console.log(uploadedImages[0].url)
+      if(!uploadedImages) {
+        return
+      }
       uploadedImageUrl = uploadedImages[0].url
-
     }
 
     if(type === 'Create') {
@@ -58,18 +61,38 @@ const EventForm = ({userId, type}: EventFormProps) => {
           event: { ...values, imageUrl: uploadedImageUrl },
           userId,
           path: '/profile'
-
         })
 
-        if(newEvent){
+        if(newEvent) {
           form.reset();
           router.push(`/events/${newEvent._id}`)
         }
-
-    } catch (error) {
-      console.log(error)
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
+
+    if(type === 'Update') {
+      if(!eventId) {
+        router.back()
+        return;
+      }
+
+      try {
+        const updatedEvent = await createEvent({
+          userId,
+          event: { ...values, imageUrl: uploadedImageUrl}, //, _id: eventId },
+          path: `/events/${eventId}`
+        })
+
+        if(updatedEvent) {
+          form.reset();
+          router.push(`/events/${updatedEvent._id}`)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
 }
 
   return (
