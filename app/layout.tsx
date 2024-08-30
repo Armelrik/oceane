@@ -42,3 +42,5 @@ export default function RootLayout({
     </ClerkProvider>
   )
 }
+
+//CLERK_ENCRYPTION_KEY=cfd6c224872059e9aa1f4a37b38a29f6527f5aedaeb282be3dc23d0162d448e4
