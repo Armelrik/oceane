@@ -19,7 +19,6 @@ export const getAllCategories = async () => {
   try{
     await connectToDb();
     const categories = await Category.find();
-    console.log("J'ai trouver:"+categories);
     return JSON.parse(JSON.stringify(categories));
     
   } catch (error){

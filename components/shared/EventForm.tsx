@@ -46,7 +46,6 @@ const EventForm = ({userId, type, event, eventId}: EventFormProps) => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
     let uploadedImageUrl = values.imageUrl;
-
     if(files.length > 0) {
       const uploadedImages = await startUpload(files)
       if(!uploadedImages) {

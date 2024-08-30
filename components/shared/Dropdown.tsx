@@ -28,6 +28,7 @@ const Dropdown = ({value, onChangeHandler}: DropdownProps) => {
             const categoryList = await getAllCategories();
             categoryList && setCategories(categoryList as ICategory[])
         }
+        getCategories();
     }, [])
 
 return (
