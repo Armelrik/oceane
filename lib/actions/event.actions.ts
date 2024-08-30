@@ -28,7 +28,7 @@ export async function getEventById(eventId: string) {
   try {
     await connectToDb()
 
-    const event = await populateEvent(Event.findById(eventId))
+    // const event = await populateEvent(Event.findById(eventId))
 
     if (!event) throw new Error('Event not found')
 
@@ -38,7 +38,7 @@ export async function getEventById(eventId: string) {
   }
 }
 
-// UPDATE
+/* UPDATE
 export async function updateEvent({ userId, event, path }: UpdateEventParams) {
   try {
     await connectToDb()
@@ -150,3 +150,5 @@ export async function getRelatedEventsByCategory({
     handleError(error)
   }
 }
+
+*/
