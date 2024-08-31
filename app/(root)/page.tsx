@@ -1,4 +1,6 @@
+import CategoryFilter from "@/components/shared/CategoryFilter";
 import Collection from "@/components/shared/Collection";
+import Search from "@/components/shared/Search";
 import { Button } from "@/components/ui/button";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import Image from "next/image";
@@ -16,9 +18,9 @@ export default async function Home() {
       <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 2xl:gap-0">
         <div className="flex flex-col justify-center gap-8">
           <h1 className="h1-bold">Bienvenue sur la plateforme Oceane</h1>
-            <p className="p-regular-20 md:p-regular-24">Vous pouvez acheter vos billets 
-              pour le concer de Fally Ipupa a Paris</p>
-              <Button size="lg" asChild className="button w-full  sm:w-fit" >
+            <p className="p-regular-20 md:p-regular-24">Vous pouvez acheter vos billets pour le concert de 
+              Fally Ipupa à Paris et bien d'autres</p>
+              <Button size="lg" asChild className="button w-full sm:w-fit" >
                 <Link href="#events" >
                   Voir les dates
                 </Link>
@@ -33,15 +35,15 @@ export default async function Home() {
     </section>
 
     <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
-      <h2 className="h2-bold">Vous donner le <br /> meilleur du divertissement</h2>
+      <h2 className="h2-bold">Vous donner le <br /> meilleur des événement en vue</h2>
       <div className="flex w-full flex-col gap-5 md:flex-row">
-        Search
-        CategoryFilter
+        <Search />
+        <CategoryFilter />
       </div>
 
       <Collection
-        data={[]}
-        emptyTitle="Pas de concert en vue"
+        data={events?.data}
+        emptyTitle="Aucun événement en vue"
         emptyStateSubtext="Revenez plus tard"
         collectionType="All_Events"
         limit={6}

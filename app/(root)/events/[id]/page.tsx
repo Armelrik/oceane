@@ -1,11 +1,20 @@
-import { getEventById } from '@/lib/actions/event.actions'
+import CheckoutButton from '@/components/shared/CheckoutButton'
+import Collection from '@/components/shared/Collection'
+import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils'
 import { SearchParamProps } from '@/types'
 import Image from 'next/image'
 import React from 'react'
 
-const EventDetails = async ({ params: {id} }: SearchParamProps) => {
+const EventDetails = async ({ params: {id}, searchParams }: SearchParamProps) => {
   const event = await getEventById(id)
+
+  const relatedEvents = await getRelatedEventsByCategory({
+    categoryId: event.category._id,
+    eventId: event._id,
+    page: searchParams.page as string,
+  })
+
   return (
     <>
     <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
@@ -39,7 +48,7 @@ const EventDetails = async ({ params: {id} }: SearchParamProps) => {
             </div>
           </div>
 
-          {/* <CheckoutButton event={event} /> */}
+          <CheckoutButton event={event} />
 
           <div className="flex flex-col gap-5">
             <div className='flex gap-2 md:gap-3'>
@@ -63,7 +72,7 @@ const EventDetails = async ({ params: {id} }: SearchParamProps) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="p-bold-20 text-grey-600">Decouvrir:</p>
+            <p className="p-bold-20 text-grey-600">Découvrir:</p>
             <p className="p-medium-16 lg:p-regular-18">{event.description}</p>
             <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline">{event.url}</p>
           </div>
@@ -75,15 +84,15 @@ const EventDetails = async ({ params: {id} }: SearchParamProps) => {
     <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
       <h2 className="h2-bold">Evenements similaires</h2>
 
-      {/* <Collection 
+       <Collection 
           data={relatedEvents?.data}
-          emptyTitle="No Events Found"
-          emptyStateSubtext="Come back later"
+          emptyTitle="Aucun événement similaire trouvé"
+          emptyStateSubtext="Revenez plus tard"
           collectionType="All_Events"
           limit={3}
           page={searchParams.page as string}
           totalPages={relatedEvents?.totalPages}
-        /> */}
+        /> 
     </section>
     </>
   )

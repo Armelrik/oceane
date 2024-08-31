@@ -1,11 +1,16 @@
 "use server"
 
-import { CreateEventParams, GetAllEventsParams } from "@/types";
+import { CreateEventParams, DeleteEventParams, GetAllEventsParams, GetEventsByUserParams, GetRelatedEventsByCategoryParams, UpdateEventParams } from "@/types";
 import { connectToDb } from "../database"
 import { handleError } from "../utils";
 import User from "../database/models/user.model";
 import Event from "../database/models/event.model";
 import Category from "../database/models/category.model";
+import { revalidatePath } from "next/cache";
+
+const getCategoryByName = async (name: string) => {
+  return Category.findOne({ name: { $regex: name, $options: 'i' } })
+}
 
 const populateEvent = async (query: any) => {
   return query
@@ -74,7 +79,7 @@ export async function getAllEvents({ query, limit = 6, page, category }: GetAllE
   }
 }
 
-/* UPDATE
+// UPDATE
 export async function updateEvent({ userId, event, path }: UpdateEventParams) {
   try {
     await connectToDb()
@@ -151,7 +156,7 @@ export async function getRelatedEventsByCategory({
       .skip(skipAmount)
       .limit(limit)
 
-    const events = void() //await populateEvent(eventsQuery)
+    const events = await populateEvent(eventsQuery)
     const eventsCount = await Event.countDocuments(conditions)
 
     return { data: JSON.parse(JSON.stringify(events)), totalPages: Math.ceil(eventsCount / limit) }
@@ -160,4 +165,3 @@ export async function getRelatedEventsByCategory({
   }
 }
 
-*/
