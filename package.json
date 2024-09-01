@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.3.4",
+    "@clerk/nextjs": "^5.3.7",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.1",
@@ -29,9 +29,9 @@
     "node": "^22.6.0",
     "oceane": "file:",
     "query-string": "^9.1.0",
-    "react": "^18",
+    "react": "^18.3.1",
     "react-datepicker": "^7.3.0",
-    "react-dom": "^18",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.2",
     "stripe": "^16.9.0",
     "svix": "^1.30.0",
